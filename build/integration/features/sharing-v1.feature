@@ -906,17 +906,20 @@ Feature: sharing
     And the single response should contain a property "{http://owncloud.org/ns}permissions" with value "SRDNVCK"
     And as "user1" the folder "merge-test-outside-groups-renamebeforesecondshare" does not exist
 
-#  Scenario: Merging shares for recipient when shared from outside with user then group and recipient renames in between
-#    Given As an "admin"
-#    And user "user0" exists
-#    And user "user1" exists
-#    And group "group1" exists
-#    And user "user1" belongs to group "group1"
-#    And user "user0" created a folder "merge-test-outside-groups-renamebeforesecondshare"
-#    When folder "merge-test-outside-groups-renamebeforesecondshare" of user "user0" is shared with user "user1"
-#    And User "user1" moved folder "/merge-test-outside-groups-renamebeforesecondshare" to "/merge-test-outside-groups-renamebeforesecondshare-renamed"
-#    And folder "merge-test-outside-groups-renamebeforesecondshare" of user "user0" is shared with group "group1"
-#    Then as "user1" gets properties of folder "merge-test-outside-groups-renamebeforesecondshare-renamed" with
-#        |{http://owncloud.org/ns}permissions|
-#    And the single response should contain a property "{http://owncloud.org/ns}permissions" with value "SRDNVCK"
-#    And as "user1" the folder "merge-test-outside-groups-renamebeforesecondshare" does not exist
+  Scenario: Empting trashbin
+    Given As an "admin"
+    And user "user0" exists
+    And User "user0" deletes file "/textfile0.txt"
+    When User "user0" empties trashbin
+    Then the HTTP status code should be "200"
+
+  Scenario: orphaned shares
+    Given As an "admin"
+    And user "user0" exists
+    And user "user1" exists
+    And user "user0" created a folder "/common"
+    And user "user0" created a folder "/common/sub"
+    And file "/common/sub" of user "user0" is shared with user "user1"
+    And User "user0" deletes folder "/common"
+    When User "user0" empties trashbin
+    Then as "user1" the folder "sub" does not exist
