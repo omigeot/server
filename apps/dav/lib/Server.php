@@ -41,6 +41,7 @@ use OCP\IRequest;
 use OCP\SabrePluginEvent;
 use Sabre\CardDAV\VCFExportPlugin;
 use Sabre\DAV\Auth\Plugin;
+use OCA\DAV\Connector\Sabre\TagsPlugin;
 
 class Server {
 
@@ -175,7 +176,11 @@ class Server {
 				);
 				$this->server->addPlugin(
 					new \OCA\DAV\Connector\Sabre\QuotaPlugin($view));
-
+				$this->server->addPlugin(
+					new TagsPlugin(
+						$this->server->tree, \OC::$server->getTagManager()
+					)
+				);
 			}
 		});
 	}
