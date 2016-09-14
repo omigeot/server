@@ -1,7 +1,7 @@
 {
-  "name": "ownCloud",
-  "version": "8.2 pre alpha",
-  "homepage": "https://www.owncloud.org",
+  "name": "Nextcloud",
+  "version": "11.0 alpha",
+  "homepage": "https://www.nextcloud.com",
   "license": "AGPL",
   "private": true,
   "ignore": [
@@ -31,6 +31,7 @@
     "davclient.js": "https://github.com/evert/davclient.js.git",
     "es6-promise": "https://github.com/jakearchibald/es6-promise.git#~2.3.0",
     "base64": "~0.3.0",
-    "clipboard": "^1.5.12"
+    "clipboard": "^1.5.12",
+    "autosize": "^3.0.17"
   }
 }
