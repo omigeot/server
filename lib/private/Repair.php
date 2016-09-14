@@ -149,9 +149,7 @@ class Repair implements IOutput{
 				\OC::$server->getGroupManager()
 			),
 			new MoveAvatars(
-				\OC::$server->getUserManager(),
-				\OC::$server->getRootFolder(),
-				\OC::$server->getAppDataDir('avatar'),
+				\OC::$server->getJobList(),
 				\OC::$server->getSystemConfig()
 			),
 		];
