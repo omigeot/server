@@ -56,12 +56,13 @@ $(document).ready(function(){
 		$('#encryptionAPI div#EncryptionWarning').toggleClass('hidden');
 	});
 
-	$('#reallyEnableEncryption').click(function() {
+	var confirmEncryption = function() {
 		$('#encryptionAPI div#EncryptionWarning').toggleClass('hidden');
 		$('#encryptionAPI div#EncryptionSettingsArea').toggleClass('hidden');
 		OC.AppConfig.setValue('core', 'encryption_enabled', 'yes');
 		$('#enableEncryption').attr('disabled', 'disabled');
-	});
+	};
+	$('#reallyEnableEncryption').click(confirmEncryption);
 
 	$('#startmigration').click(function(event){
 		$(window).on('beforeunload.encryption', function(e) {

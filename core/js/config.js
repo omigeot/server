@@ -37,6 +37,11 @@ OC.AppConfig={
 		OC.AppConfig.getCall('getValue',{app:app,key:key,defaultValue:defaultValue},callback);
 	},
 	setValue:function(app,key,value){
+		if (OC.PasswordConfirmation.requiresPasswordConfirmation()) {
+			OC.PasswordConfirmation.requirePasswordConfirmation(_.bind(this.setValue, this, arguments));
+			return;
+		}
+
 		OC.AppConfig.postCall('setValue',{app:app,key:key,value:value});
 	},
 	getApps:function(callback){
@@ -49,9 +54,19 @@ OC.AppConfig={
 		OC.AppConfig.getCall('hasKey',{app:app,key:key},callback);
 	},
 	deleteKey:function(app,key){
+		if (OC.PasswordConfirmation.requiresPasswordConfirmation()) {
+			OC.PasswordConfirmation.requirePasswordConfirmation(_.bind(this.deleteKey, this, arguments));
+			return;
+		}
+
 		OC.AppConfig.postCall('deleteKey',{app:app,key:key});
 	},
 	deleteApp:function(app){
+		if (OC.PasswordConfirmation.requiresPasswordConfirmation()) {
+			OC.PasswordConfirmation.requirePasswordConfirmation(_.bind(this.deleteApp, this, arguments));
+			return;
+		}
+
 		OC.AppConfig.postCall('deleteApp',{app:app});
 	}
 };
