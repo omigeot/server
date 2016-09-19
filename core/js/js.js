@@ -1673,6 +1673,7 @@ OC.PasswordConfirmation = {
 	$background: null,
 	$input: null,
 	$submit: null,
+	callback: null,
 
 	init: function() {
 		this.$form = $('#sudo-login-form');
@@ -1685,9 +1686,16 @@ OC.PasswordConfirmation = {
 		this.$submit.on('click', _.bind(this._submitPasswordConfirmation, this));
 	},
 
-	requirePasswordConfirmation: function() {
+	requiresPasswordConfirmation: function() {
 		var timeSinceLogin = moment.now() - nc_lastLogin * 1000;
-		if (timeSinceLogin > 30 * 60 * 1000) { // 30 minutes
+		return timeSinceLogin > 30 * 60 * 1000; // 30 minutes
+	},
+
+	/**
+	 * @param {function} callback
+	 */
+	requirePasswordConfirmation: function(callback) {
+		if (this.requiresPasswordConfirmation()) {
 			this.$form.removeClass('hidden');
 			this.$background.removeClass('hidden');
 
@@ -1696,6 +1704,8 @@ OC.PasswordConfirmation = {
 				this.$input.val('');
 			}
 		}
+
+		this.callback = callback;
 	},
 
 	_submitPasswordConfirmation: function() {
@@ -1715,6 +1725,10 @@ OC.PasswordConfirmation = {
 
 				self.$form.addClass('hidden');
 				self.$background.addClass('hidden');
+
+				if (!_.isUndefined(self.callback)) {
+					self.callback();
+				}
 			},
 			error: function() {
 				OC.Notification.showTemporary(t('core', 'Failed to authenticate, try again'));
