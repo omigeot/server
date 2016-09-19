@@ -924,7 +924,7 @@ describe('Core base tests', function() {
 			var dataProvider = [
 				[200, false],
 				[400, false],
-				[0, true],
+				[0, false],
 				[401, true],
 				[302, true],
 				[303, true],
