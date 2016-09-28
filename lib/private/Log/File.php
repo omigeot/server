@@ -101,6 +101,7 @@ class File {
 		} else {
 			$user = '--';
 		}
+		$version = implode('.', \OCP\Util::getVersion());
 		$entry = compact(
 			'reqId',
 			'remoteAddr',
@@ -110,7 +111,8 @@ class File {
 			'time',
 			'method',
 			'url',
-			'user'
+			'user',
+			'version'
 		);
 		$entry = json_encode($entry);
 		$handle = @fopen(self::$logFile, 'a');
